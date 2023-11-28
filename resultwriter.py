@@ -1,9 +1,6 @@
 
-import csv
 from classes import User
 from datetime import datetime as dt
-from icecream import ic
-import os
 import pandas as pd
 from cryptography.fernet import Fernet
 
@@ -13,14 +10,11 @@ class Datawriter(User):
     def __init__(self, website="", name="", password: str = "", hashed=""):  #inherit what we already have from superclass
         super().__init__(website, name, password, hashed)
         self.time = dt.now().strftime("%d-%m-%Y %H:%M:%S")
-        #self.key = key                 #add timestamp
 
     #def decrypt_data(self, encrypted_data):
-    #    crypter = Fernet(self.key)
+    #    crypter = Fernet(self.crypter)
     #    decrypted_data = crypter.decrypt(encrypted_data)
-    #    return decrypted_data.decode()
-
-    
+    #    return decrypted_data.decode() 
     def writeresults(self):
         """write given user data & gen.pw"""
         file_path_csv = "/home/ubuntuuser/FINALPROJECT/results/nopassword.csv"
@@ -37,14 +31,15 @@ class Datawriter(User):
                                    columns=["Website", "Name", "Password", "Hashed", "Date"])
             df = pd.concat([df, row], ignore_index=True)
         df.to_csv(file_path_csv, index=False)
-    
-    def view_file(self):
-        encrypted_data = pd.read_csv("/home/ubuntuuser/FINALPROJECT/results/nopassword.csv") 
-        decrypted_data = self.decrypt_data(encrypted_data)
-        data = pd.read_csv(pd.compat.StringIO(decrypted_data))
-        print(data)
-        #key = b'your_key_here'
-        #result_writer = ResultWriter()
-        #result_writer.view_file()
 
-        
+    @staticmethod
+    def view_file(crypter: Fernet):
+        data = pd.read_csv("/home/ubuntuuser/FINALPROJECT/results/nopassword.csv")
+        decrypted_pws:list = [] 
+        for entry in data.Hashed:
+            encrypted_pw = crypter.decrypt(entry.encode())
+            decrypted_pw = encrypted_pw.decode()
+            decrypted_pws.append(decrypted_pw) 
+        byte_encrypt: list[str] = [crypter.decrypt(entry) for entry in data.Hashed] 
+        print(byte_encrypt)
+ 

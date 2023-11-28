@@ -1,12 +1,10 @@
-import bcrypt
 import string
 import random
 import sys
 from cryptography.fernet import Fernet
 
 
-
-def password_generator():
+def password_generator(crypter: Fernet):
     """generator logic"""
     while True:
         try:
@@ -39,26 +37,7 @@ def password_generator():
         except ValueError as e:
             print(e)
 
-
     password: str = "".join(random.choice(pw_unhashed) for _ in range(password_len))    #choose random characters depending on type & len choosen
-    key = Fernet.generate_key()
-    crypter = Fernet(key)
-    #crypter = generate_key()
-    #hashed: bytes = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())          #hashing the password with gensalt=adding a rnd. value to the password.
     hashed = crypter.encrypt(password.encode())
-    
     return password, hashed
 
-
-#def generate_key():
-#    key = Fernet.generate_key()
-#    with open("key.txt", "wb") as f:
-#        f.write(key)
-#
-#    return key
-
-   
-
-
-
-  

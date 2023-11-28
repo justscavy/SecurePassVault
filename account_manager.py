@@ -3,7 +3,8 @@ from resultwriter import Datawriter
 import sys
 from cryptography.fernet import Fernet
 
-def account_management():
+
+def account_management(crypter: Fernet):
      while True:
         try:
             select = int(input("\nSelect:\n1.Create password:\n2.View passwords\n3.Exit\n>> "))
@@ -12,15 +13,13 @@ def account_management():
                 return user        
             elif select == 2:
                 data_writer = Datawriter()
-                data_writer.view_file()       
+                data_writer.view_file(crypter=crypter)       
             elif select == 3:
                 sys.exit()
             else:
                 raise ValueError("\nInvalid Input.")
         except ValueError as e:
             print(e)
-
-
 
 
 def create_account():
@@ -38,12 +37,3 @@ def create_account():
             
             except Exception as e:          #fix
                  print(f"Error: {e}")
-
-#def generate_key():
-#    key = Fernet.generate_key()
-#    with open("key.txt", "wb") as f:
-#        f.write(key)
-#
-#    return key
-
-
