@@ -5,10 +5,15 @@ class User:
         self.name = name
         self.password = password
         self.hashed = hashed
+        
 
-    def password_maker(self,password=str, hashed=str):
+    def password_maker(self,password=str, hashed=str): ###andre was mache ich hier
         self.password = password
         self.hashed = hashed
+        
 
 
-    #def password_hasher(self)
+
+#class Passwordmanager:
+#    def __init__(self) -> None:
+#        pass

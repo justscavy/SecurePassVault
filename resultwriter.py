@@ -4,71 +4,47 @@ from classes import User
 from datetime import datetime as dt
 from icecream import ic
 import os
+import pandas as pd
+from cryptography.fernet import Fernet
 
 
 class Datawriter(User):
-    """write data in .txt and csv file"""
-    def __init__(self, website: str, name: str, password: str = "", hashed="", time= str):
-        
+    """write data in a csv file"""
+    def __init__(self, website="", name="", password: str = "", hashed=""):  #inherit what we already have from superclass
         super().__init__(website, name, password, hashed)
         self.time = dt.now().strftime("%d-%m-%Y %H:%M:%S")
-        
+        #self.key = key                 #add timestamp
+
+    #def decrypt_data(self, encrypted_data):
+    #    crypter = Fernet(self.key)
+    #    decrypted_data = crypter.decrypt(encrypted_data)
+    #    return decrypted_data.decode()
+
+    
     def writeresults(self):
-        file_path_csv = "/home/ubuntuuser/py_practice/day1/FINALPROJECT/results/nopassword.csv"
-        rows = []
+        """write given user data & gen.pw"""
+        file_path_csv = "/home/ubuntuuser/FINALPROJECT/results/nopassword.csv"
+        
+        try:
+            df = pd.read_csv(file_path_csv) #try to read, if it doesnt exist create it!
+        except FileNotFoundError:
+            df = pd.DataFrame(columns=["Website", "Name", "Password", "Hashed", "Date"])
+        mask = df["Website"] == self.website 
+        if mask.any():
+            df.loc[mask, ["Name", "Password", "Hashed", "Date"]] = [self.name, self.password, self.hashed, self.time]   # if given website already exsits update it.
+        else:
+            row = pd.DataFrame([[self.website, self.name, self.password, self.hashed, self.time]],         #else append given data in next row
+                                   columns=["Website", "Name", "Password", "Hashed", "Date"])
+            df = pd.concat([df, row], ignore_index=True)
+        df.to_csv(file_path_csv, index=False)
+    
+    def view_file(self):
+        encrypted_data = pd.read_csv("/home/ubuntuuser/FINALPROJECT/results/nopassword.csv") 
+        decrypted_data = self.decrypt_data(encrypted_data)
+        data = pd.read_csv(pd.compat.StringIO(decrypted_data))
+        print(data)
+        #key = b'your_key_here'
+        #result_writer = ResultWriter()
+        #result_writer.view_file()
 
-        with open(file=file_path_csv, mode = "r", newline="") as f:
-            reader = csv.reader(f)
-            header, *rows = reader
-            rows = [[self.website, self.name, self.password, self.hashed, self.time] if row[0] == self.website else row for row in rows]
-
-        with open(file=file_path_csv, mode = "w", newline="") as f:
-            writer = csv.writer(f)
-            writer.writerows([header] + rows)
-
-        if not any(row[0] == self.website for row in rows):
-            with open(file=file_path_csv, mode = "a", newline="") as f:
-                writer = csv.writer(f)
-                if f.tell() == 0:
-                    writer.writerow(["Website", "Name", "Password", "Hashed", "Date"])
-                writer.writerow([self.website, self.name, self.password, self.hashed, self.time])
-
-
-"""
-#class Datawriter(User):
-#    write data in .txt and csv file
-#    def __init__(self, website: str, name: str, password: str = "", hashed="", time= str):
-#        super().__init__(website, name, password, hashed)
-#        self.time = dt.now().strftime("%d-%m-%Y %H:%M:%S")
-#
-#    def WriteResults(self) -> None:
-#        file_path_txt = "/home/ubuntuuser/py_practice/day1/FINALPROJECT/results/nopassword.txt"
-#        
-#        with open(file=file_path_txt, mode="r+") as f:
-#            file_content = f.read()
-#            if self.website in file_content:
-#                website_pos = file_content.find(f"the website: {self.website}")
-#                if website_pos != -1:
-#                    f.seek(website_pos)
-#                    data_list = [
-#                        f"the website: {self.website}\n",
-#                        f"Your name: {self.name}\n",
-#                        f"Your password: {self.password}\n",
-#                        f"Your hash:{self.hashed}\n"
-#                        f"last changed:{self.time}\n",
-#                    ]
-#                    f.writelines(data_list)
-#                    f.writelines("\n")
-#            else:
-#                with open(file_path_txt, mode="a") as f:
-#                    data_list = [
-#                        f"the website: {self.website}\n",
-#                        f"Your name: {self.name}\n",
-#                        f"Your password: {self.password}\n",
-#                        f"Your hash:{self.hashed}\n"
-#                        f"last changed:{self.time}",
-#                    ]
-#                    f.writelines(data_list)
-#                
-#        return data_list 
-"""
+        
