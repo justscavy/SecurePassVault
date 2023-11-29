@@ -1,15 +1,15 @@
 import string
 import random
 import sys
-from cryptography.fernet import Fernet
 
+from cryptography.fernet import Fernet
 
 def password_generator(crypter: Fernet):
     """generator logic"""
+    
     while True:
         try:
             password_method = int(input("\nChose ur password type:\n1.Only letters:\n2.Letters and numbers: \n3.Letters, numbers and Special Characters:\n4.Exit\n>> "))
-
             if password_method == 1:
                 pw_unhashed = string.ascii_letters
                 break
@@ -29,15 +29,15 @@ def password_generator(crypter: Fernet):
     while True:
         try:
             password_len = int(input("\nLength of password? (4 characters atleast!)\n>> "))
-
-            if not isinstance(password_len, int) or password_len < 4:      #checking for type and min len
-                raise ValueError("\nInvalid Input. Password is not long enough!")           #handle errors
+            #checking for password type and min len
+            if not isinstance(password_len, int) or password_len < 4:      
+                raise ValueError("\nInvalid Input. Password is not long enough!")    
             else:
                 break
         except ValueError as e:
             print(e)
-
-    password: str = "".join(random.choice(pw_unhashed) for _ in range(password_len))    #choose random characters depending on type & len choosen
-    hashed = crypter.encrypt(password.encode())
-    return password, hashed
+    #choose random characters depending on type & len choosen
+    password: str = "".join(random.choice(pw_unhashed) for _ in range(password_len))    
+    encrypted_pw = crypter.encrypt(password.encode())
+    return password, encrypted_pw
 

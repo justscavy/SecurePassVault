@@ -1,8 +1,6 @@
-
-
-#def sheet(input_word="PASSWORD-MANAGER", input_width=28):
 def sheet(input_word=str, input_width=int):
     """create template with defined word and width"""
+    
     signs: str = "=" * input_width
     center_word: int = (input_width - len(input_word)) // 2
     binary_signs: str = "01" * (len(input_word)  // 2)
@@ -15,8 +13,4 @@ def sheet(input_word=str, input_width=int):
              )
     print(output)
     print()
-
-
-
-
-
+    
