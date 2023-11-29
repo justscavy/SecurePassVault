@@ -3,12 +3,12 @@ from dataclasses import dataclass
 
 @dataclass
 class PWManagerEntry:
-    """Represents an entry for the password manager."""
+    """Represent an entry from the user."""
     website: str
     name: str
     password: str = ""
     encrypted_pw: str = ""
-
-    def password_maker(self, password: str, encrypted_pw: str): ###andre was mache ich hier
+    #not pretty but it works FIX
+    def password_maker(self, password: str, encrypted_pw: str):
         self.password = password
         self.encrypted_pw = encrypted_pw

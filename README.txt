@@ -1,6 +1,13 @@
 TODO:
-adding argparse
+adding argparse um whiletrue inputs zu reduzieren
 +store key from session, if key exists use it. (cant access dataset with new key....)
 +view passwords adding it to df (right now we only have passwords)
 +fix password csv file creating dont hardcode it
-remind me if last update is to big mayybe with pendulum
+if pw update is longer than x.time force me to recreate it or auto.
+flowchart erstellen
+den key mit ausgewähltem pw erstellen. (und hashen...)
+key store festlegen local in registry
+requirements erstellen
+readme erstellen
+fix PWManagerEntry.password_maker
+pw_file_manager def store is gettin to big   #Arjan

@@ -4,10 +4,10 @@ import sys
 
 from cryptography.fernet import Fernet
 
+
 def password_generator(crypter: Fernet):
-    """generator logic"""
-    
-    while True:
+    """password_generator logic"""
+    while True:#set a method which charactes the password should have.
         try:
             password_method = int(input("\nChose ur password type:\n1.Only letters:\n2.Letters and numbers: \n3.Letters, numbers and Special Characters:\n4.Exit\n>> "))
             if password_method == 1:
@@ -38,6 +38,7 @@ def password_generator(crypter: Fernet):
             print(e)
     #choose random characters depending on type & len choosen
     password: str = "".join(random.choice(pw_unhashed) for _ in range(password_len))    
-    encrypted_pw = crypter.encrypt(password.encode())
+    #encrypt the given cleartext password.
+    encrypted_pw: bytes = crypter.encrypt(password.encode())
     return password, encrypted_pw
 

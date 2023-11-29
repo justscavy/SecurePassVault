@@ -10,7 +10,6 @@ from pw_file_manager import PWFileManager
 
 class PWManager:
     """Allows password management."""
-
     def __init__(self, crypter: Fernet) -> None:
         self.crypter: Fernet = crypter
         self.pw_file_manager: PWFileManager = PWFileManager()
@@ -60,7 +59,6 @@ class PWManager:
 
     def update_entries(self, pw_file_manager) -> None:
         self.pw_manager_entries = pw_file_manager.view(crypter=self.crypter)
-
 
     def generate_password(self, crypter: Fernet):
         """generator logic"""
