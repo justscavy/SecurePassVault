@@ -1,4 +1,4 @@
-´´´mermaid
+```mermaid
 flowchart TD
     EnterMasterPW[Enter Password] --> PWValidation{Password correct?}
     PWValidation -->|False| EnterMasterPW
@@ -19,4 +19,4 @@ flowchart TD
     PWEntryPasswordLength --> CreatePasswordEntry[Create Password Entry]
     CreatePasswordEntry --> UserInput
 
-´´´
+```
