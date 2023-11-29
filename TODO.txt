@@ -1,6 +1,3 @@
-https://mermaid.live/edit
-
-
 TODO:
 adding argparse um whiletrue inputs zu reduzieren
 +store key from session, if key exists use it. (cant access dataset with new key....)
@@ -14,3 +11,4 @@ requirements erstellen
 readme erstellen
 fix PWManagerEntry.password_maker
 pw_file_manager def store is gettin to big   #Arjan
+add exit option when entering key

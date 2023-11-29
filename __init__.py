@@ -26,7 +26,7 @@ def login(crypter):
 
     while True:
         key_input = input("Enter your key: ")
-        #compare input & key
+        #compare user_input & key.key file
         if key_input == stored_key_str:
             print(f"\nLogin successfull!\n")
             return True
