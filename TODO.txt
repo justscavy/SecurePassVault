@@ -1,3 +1,6 @@
+https://mermaid.live/edit
+
+
 TODO:
 adding argparse um whiletrue inputs zu reduzieren
 +store key from session, if key exists use it. (cant access dataset with new key....)
