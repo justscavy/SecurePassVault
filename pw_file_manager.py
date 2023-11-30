@@ -3,6 +3,7 @@ from typing import Union
 from pathlib import Path
 
 from cryptography.fernet import Fernet
+from cryptography.fernet import InvalidToken
 import pandas as pd
 
 from classes import PWManagerEntry
@@ -52,7 +53,7 @@ class PWFileManager:
         try:
             data = pd.read_csv(self.csv_file_path)
             #decrypt and replace with cleartext for each field in Password.
-            pws_cleartext: list = [] 
+            pws_cleartext: list = []
             for entry in data.Password:
                 decrypted_pw: bytes = crypter.decrypt(entry.encode())
                 decoded_pw: str = decrypted_pw.decode()
@@ -60,9 +61,12 @@ class PWFileManager:
                 pws_cleartext.append(decoded_pw)
                 #concat pws_cleartext with df
             data["Password"] = pws_cleartext
-            print(data)
+            print(f"\n{data}")
         except FileNotFoundError as e:
-                print(f"There are no entries yet. {e}")
+            print(f"There are no entries yet. {e}")
+        except InvalidToken:
+            print(f"Ur Token is wrong. You must have changed ur key to this entries. GG")
+
 
 
         

@@ -5,12 +5,13 @@ adding argparse um whiletrue inputs zu reduzieren
 +fix password csv file creating dont hardcode it
 if pw update is longer than x.time force me to recreate it or auto.
 +flowchart erstellen
--+-+-+den key mit ausgewähltem pw erstellen. (und hashen...)
++den key mit ausgewähltem pw erstellen. (und hashen...)
 key store festlegen local in registry
 +requirements erstellen
 +readme erstellen
 fix PWManagerEntry.password_maker
 +venv neu aufsetzen
 pw_file_manager def store is gettin to big   #Arjan
-add exit option when entering key
-fix login encrypt given key.
++add exit option when entering key
++fix login encrypt given key.
++making new class for functions.key_manager & generate key  KeyManager

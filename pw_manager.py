@@ -16,6 +16,7 @@ class PWManager:
         self.pw_file_manager: PWFileManager = PWFileManager()
         self.pw_manager_entries: list[PWManagerEntry] = []
 
+
     def main_menu(self):
         """main_menu 1.create password or 2.view password"""
         while True:

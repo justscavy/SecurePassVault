@@ -7,18 +7,19 @@ from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 from getpass import getpass
 
 
-key_file = "key.key"
+
+key_file: str = "key.key"
 
 
-def generate_key(password, salt):
-    #use key derivation
+def generate_key(password: str, salt: bytes):
+    #use key derivation instead of generate
     kdf = PBKDF2HMAC(
         algorithm=hashes.SHA256(),
         salt=salt,
         iterations=100000,
         length=32,
     )
-    key = base64.urlsafe_b64encode(kdf.derive(password.encode()))
+    key: bytes = base64.urlsafe_b64encode(kdf.derive(password.encode()))
     return key
 
 
