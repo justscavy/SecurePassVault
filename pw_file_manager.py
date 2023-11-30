@@ -10,7 +10,7 @@ from classes import PWManagerEntry
 
 class PWFileManager:
     """Manages files used by the password manager."""
-    def __init__(self, csv_file_name: Union[str, Path] = "nopassword.csv") -> None:
+    def __init__(self, csv_file_name: Union[str, Path] = "nopasswords.csv") -> None:
         #create user input file if it doesnt exist into current dir.
         current_directory: Path = Path.cwd()
         self.csv_file_path = current_directory / csv_file_name
@@ -49,16 +49,21 @@ class PWFileManager:
 
     def view(self, crypter: Fernet):
         """Display data from the menu"""
-        data = pd.read_csv(self.csv_file_path)
-        #decrypt and replace with cleartext for each field in Password.
-        pws_cleartext: list = [] 
-        for entry in data.Password:
-            decrypted_pw: bytes = crypter.decrypt(entry.encode())
-            decoded_pw: str = decrypted_pw.decode()
-            #put all cleartexts into pws
-            pws_cleartext.append(decoded_pw)
-            #concat pws_cleartext with df
-        data["Password"] = pws_cleartext
-        print(data)
+        try:
+            data = pd.read_csv(self.csv_file_path)
+            #decrypt and replace with cleartext for each field in Password.
+            pws_cleartext: list = [] 
+            for entry in data.Password:
+                decrypted_pw: bytes = crypter.decrypt(entry.encode())
+                decoded_pw: str = decrypted_pw.decode()
+                #put all cleartexts into pws
+                pws_cleartext.append(decoded_pw)
+                #concat pws_cleartext with df
+            data["Password"] = pws_cleartext
+            print(data)
+        except FileNotFoundError as e:
+                print(f"There are no entries yet. {e}")
+
+
         
         

@@ -30,7 +30,7 @@ class PWManager:
                     pw_manager_entry.encrypted_pw = encrypted_pw
                     #Store password entry
                     self.pw_file_manager.store(pw_manager_entry=pw_manager_entry) 
-                    print(f"\n\n\n\nAccount successfully created!")            
+                    print(f"\n\n\n\nPassword successfully created!")            
                     print(f"Website: {pw_manager_entry.website}")
                     print(f"Username: {pw_manager_entry.name}")
                 elif select == 2:
