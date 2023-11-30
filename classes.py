@@ -9,6 +9,6 @@ class PWManagerEntry:
     password: str = ""
     encrypted_pw: str = ""
     #not pretty but it works FIX
-    def password_maker(self, password: str, encrypted_pw: str):
+    def password_maker(self, password: str, encrypted_pw: str) -> None:
         self.password = password
         self.encrypted_pw = encrypted_pw

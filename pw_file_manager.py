@@ -17,7 +17,7 @@ class PWFileManager:
         self.csv_file_path = current_directory / csv_file_name
         self.time = dt.now().strftime("%d-%m-%Y %H:%M:%S")
 
-    def store(self, pw_manager_entry: PWManagerEntry):
+    def store(self, pw_manager_entry: PWManagerEntry) -> None:
         """write given user data & gen.pw"""
         #try to read, if it doesnt exist create it!
         try:
@@ -48,7 +48,7 @@ class PWFileManager:
             #finaly convert type df back to csv
         df.to_csv(self.csv_file_path, index=False)
 
-    def view(self, crypter: Fernet):
+    def view(self, crypter: Fernet) -> None:
         """Display data from the menu"""
         try:
             data = pd.read_csv(self.csv_file_path)

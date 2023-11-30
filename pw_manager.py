@@ -2,6 +2,7 @@ import sys
 import string
 import random
 
+from typing import Tuple
 from cryptography.fernet import Fernet
 
 from classes import PWManagerEntry
@@ -17,7 +18,7 @@ class PWManager:
         self.pw_manager_entries: list[PWManagerEntry] = []
 
 
-    def main_menu(self):
+    def main_menu(self) -> None:
         """main_menu 1.create password or 2.view password"""
         while True:
             try:
@@ -44,7 +45,7 @@ class PWManager:
             except ValueError as e:
                 print(e)
 
-    def create_pw_manager_entry(self):
+    def create_pw_manager_entry(self) -> PWManagerEntry:
         """gathering user_info WEBSITE & USERNAME"""
         while True:
             try:
@@ -60,7 +61,7 @@ class PWManager:
                 print(f"Error: {ve}")
                 
 
-    def generate_password(self, crypter: Fernet):
+    def generate_password(self, crypter: Fernet) -> Tuple[str, bytes]:
         """generator logic"""
         while True:
             try:

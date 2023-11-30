@@ -1,20 +1,21 @@
+from pathlib import Path
+
 from pw_manager import PWManager
-from plates import sheet
+from intro import plate
 from login_function import login
 from key_manager import key_management
 
 
+#keypath
+key_file: Path = Path("key.key")
 
 
-def main(): 
-    sheet(input_word="PASSWORD-MANAGER", input_width=40) #create template
-    crypter = key_management() #create or load an existing key.
-    while True:
-        if login(crypter):
-            pw_manager: PWManager = PWManager(crypter=crypter)  
-            pw_manager.main_menu()
-        else: 
-            break
+def main() -> None:
+    plate(input_word="PASSWORD-MANAGER", input_width=40) #create template
+    crypter = key_management(key_file=key_file) #create or load an existing key.
+    if login(crypter=crypter, key_file=key_file):
+        pw_manager: PWManager = PWManager(crypter=crypter)  
+        pw_manager.main_menu()
 
 
 if __name__ == "__main__":

@@ -1,4 +1,4 @@
-def sheet(input_word=str, input_width=int):
+def plate(input_word=str, input_width=int) -> None:
     """create template with defined word and width"""
     signs: str = "=" * input_width
     center_word: int = (input_width - len(input_word)) // 2

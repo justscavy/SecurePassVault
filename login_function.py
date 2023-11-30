@@ -1,16 +1,13 @@
 import sys
+from pathlib import Path
 
-from getpass import getpass
+from cryptography.fernet import Fernet
 
 from key_manager import generate_key
+from getpass import getpass
 
 
-
-
-key_file: str = "key.key"
-
-
-def login(crypter):
+def login(crypter: Fernet, key_file: Path) -> bool:
     """Login with key"""
     while True:
         #hide user input with getpass
@@ -18,7 +15,7 @@ def login(crypter):
         if password == "3":
             sys.exit()
         try:
-            with open(key_file, 'rb') as f:
+            with open(key_file, "rb") as f:
                 key_salted = f.read()
                 #split key from salt
                 stored_key, salt = key_salted.split(b';')
@@ -29,5 +26,7 @@ def login(crypter):
                     return True
                 else:
                     print("Wrong password")
+                    return False
         except Exception as e:
             print(f"Login failed: {e}")
+            return False

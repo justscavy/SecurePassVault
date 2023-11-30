@@ -1,16 +1,16 @@
 import os
 import base64
+from pathlib import Path
 
 from cryptography.fernet import Fernet
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
+
 from getpass import getpass
 
 
-key_file: str = "key.key"
-
-
-def generate_key(password: str, salt: bytes):
+def generate_key(password: str, salt: bytes) -> bytes:
+    """generate the key from masterpasword"""
     #use key derivation instead of generate
     kdf = PBKDF2HMAC(
         algorithm=hashes.SHA256(),
@@ -22,13 +22,14 @@ def generate_key(password: str, salt: bytes):
     return key
 
 
-def key_management():
+def key_management(key_file: Path) -> Fernet:
     """If key exists use it else, create it"""
-    if os.path.exists(key_file):
-        with open(key_file, 'rb') as f:
+    
+    if key_file.exists():
+        with open(key_file, "rb") as f:
             key_salted = f.read()
             #split the salted part from the key generation apart
-            key, salt = key_salted.split(b';')
+            key = key_salted.split(b';')[0]
     else:
         password = getpass("Its ur first time!\nCreate a Masterpassword:")
         print("i have no idea how to get it back yet...\nso better dont lose it :D")
@@ -37,6 +38,6 @@ def key_management():
         salt = os.urandom(16)
         key = generate_key(password, salt)
         #join key + salt back together
-        with open(key_file, 'wb') as f:
+        with open(key_file, "wb") as f:
             f.write(key + b';' + salt)
     return Fernet(key)

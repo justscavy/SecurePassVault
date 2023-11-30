@@ -2,10 +2,11 @@ import string
 import random
 import sys
 
+from typing import Tuple
 from cryptography.fernet import Fernet
 
 
-def password_generator(crypter: Fernet):
+def password_generator(crypter: Fernet) -> [str, bytes]:
     """password_generator logic"""
     while True:#set a method which charactes the password should have.
         try:
