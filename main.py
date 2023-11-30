@@ -1,6 +1,8 @@
 from pw_manager import PWManager
 from plates import sheet
 from __init__ import key_manager, login
+from icecream import ic
+
 
 
 def main(): 

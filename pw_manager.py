@@ -12,6 +12,7 @@ class PWManager:
     """Allows password management."""
     def __init__(self, crypter: Fernet) -> None:
         self.crypter: Fernet = crypter
+        #composition like ArjanCodes
         self.pw_file_manager: PWFileManager = PWFileManager()
         self.pw_manager_entries: list[PWManagerEntry] = []
 
