@@ -52,10 +52,11 @@ def login(crypter):
         try:
             with open(key_file, 'rb') as f:
                 key_salted = f.read()
+                #split key from salt
                 stored_key, salt = key_salted.split(b';')
                 key_input = generate_key(password, salt)
+                #compare unsalted key to user input
                 if key_input == stored_key:
-                    crypter.decrypt(crypter.encrypt(b"test")).decode()
                     print("Login successful!\n")
                     return True
                 else:
