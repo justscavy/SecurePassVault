@@ -1,11 +1,10 @@
 import os
-import sys
 import base64
+
 from cryptography.fernet import Fernet
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 from getpass import getpass
-
 
 
 key_file: str = "key.key"
@@ -23,7 +22,7 @@ def generate_key(password: str, salt: bytes):
     return key
 
 
-def key_manager():
+def key_management():
     """If key exists use it else, create it"""
     if os.path.exists(key_file):
         with open(key_file, 'rb') as f:
@@ -41,26 +40,3 @@ def key_manager():
         with open(key_file, 'wb') as f:
             f.write(key + b';' + salt)
     return Fernet(key)
-
-
-def login(crypter):
-    """Login with key"""
-    while True:
-        #hide user input with getpass
-        password = getpass("Enter your password to login or press 3 to exit:\n")
-        if password == "3":
-            sys.exit()
-        try:
-            with open(key_file, 'rb') as f:
-                key_salted = f.read()
-                #split key from salt
-                stored_key, salt = key_salted.split(b';')
-                key_input = generate_key(password, salt)
-                #compare unsalted key to user input
-                if key_input == stored_key:
-                    print("Login successful!\n")
-                    return True
-                else:
-                    print("Wrong password")
-        except Exception as e:
-            print(f"Login failed: {e}")
