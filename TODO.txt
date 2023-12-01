@@ -15,3 +15,4 @@ pw_file_manager def store is gettin to big   #Arjan
 +add exit option when entering key
 +fix login encrypt given key.
 +making new class for functions.key_manager & generate key  KeyManager
+auf windows nicht anwendbar

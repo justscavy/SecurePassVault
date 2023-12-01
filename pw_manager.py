@@ -45,6 +45,7 @@ class PWManager:
             except ValueError as e:
                 print(e)
 
+
     def create_pw_manager_entry(self) -> PWManagerEntry:
         """gathering user_info WEBSITE & USERNAME"""
         while True:

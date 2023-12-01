@@ -18,5 +18,4 @@ flowchart TD
     LettersNumbersSpecial --> PWEntryPasswordLength{Password Length?}
     PWEntryPasswordLength --> CreatePasswordEntry[Create Password Entry]
     CreatePasswordEntry --> UserInput
-
 ```
