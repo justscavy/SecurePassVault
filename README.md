@@ -1,4 +1,4 @@
-## Password Manager description
+## SecurePassVault description
 
 This program securely generates, stores, and manages passwords locally by employing the cryptography library’s Fernet symmetric encryption—protecting data with AES and HMAC—and strengthens security further using PBKDF2 key derivation with a salt.
 
